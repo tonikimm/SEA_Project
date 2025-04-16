@@ -3,18 +3,18 @@ const xIcon = '<i class="fa-solid fa-square-xmark" style="color: #f44336;"></i>'
 
 var showingList;
 
-// Get unique cities from FoodSpotsList
+//Get unique cities from FoodSpotsList
 const cities = [...new Set(FoodSpotsList.map(spot => spot.address.city))].sort();
 
-// Get unique states from FoodSpotsList
+//Get unique states from FoodSpotsList
 const states = [...new Set(FoodSpotsList.map(spot => spot.address.state))].sort();
 
-// Get unique categories from FoodSpotsList
+//Get unique categories from FoodSpotsList
 const categories = [...new Set(FoodSpotsList.map(spot => spot.category))].sort();
 
-// Populate filter dropdowns
+//Populate filter dropdowns
 function populateFilters() {
-  // Populate category filter
+  //Populate category filter
   const categoryFilter = document.getElementById("category-filter");
   categories.forEach(category => {
     const option = document.createElement("option");
@@ -23,7 +23,7 @@ function populateFilters() {
     categoryFilter.appendChild(option);
   });
 
-  // Populate city filter
+  //Populate city filter
   const cityFilter = document.getElementById("city-filter");
   cities.forEach(city => {
     const option = document.createElement("option");
@@ -32,7 +32,7 @@ function populateFilters() {
     cityFilter.appendChild(option);
   });
 
-  // Populate state filter
+  //Populate state filter
   const stateFilter = document.getElementById("state-filter");
   states.forEach(state => {
     const option = document.createElement("option");
@@ -42,6 +42,7 @@ function populateFilters() {
   });
 }
 
+//Filter the food spots based on the selected category, city, and state
 function filterAction() {
   const categoryFilter = document.getElementById("category-filter").value;
   const cityFilter = document.getElementById("city-filter").value;
@@ -58,7 +59,7 @@ function filterAction() {
   showCards();
 }
 
-
+//Sort the food spots based on the selected option
 function sortFoodSpots() {
   const sortSelect = document.getElementById("sort-select");
   const sortValue = sortSelect.value;
@@ -89,9 +90,11 @@ function sortFoodSpots() {
   }
 }
 
+//Show the cards based on the selected option
 function sortAction(){
   filterAction();
 }
+
 
 function showCards() {
   const cardContainer = document.getElementById("card-container");
@@ -115,6 +118,7 @@ function showCards() {
   }
 }
 
+//Edit the card content
 function editCardContent(card, name, ImageURL, address, category, rating, visited, index) {
   card.style.display = "block";
 
@@ -126,16 +130,16 @@ function editCardContent(card, name, ImageURL, address, category, rating, visite
   cardImage.alt = name + " Poster";
 
   const cardAddress = card.querySelector("#address");
-  cardAddress.textContent = "Addresss: " + address;
+  cardAddress.innerHTML = "<strong>Address:</strong> " + address;
 
   const cardCategory = card.querySelector("#category");
-  cardCategory.textContent = "Category: " + category;
+  cardCategory.innerHTML = "<strong>Category:</strong> " + category;
 
   const cardRating = card.querySelector("#rating");
-  cardRating.textContent = "Rating: " + rating + "/5";
+  cardRating.innerHTML = "<strong>Rating:</strong> " + rating + "/5";
 
   const cardVisited = card.querySelector("#visited");
-  cardVisited.innerHTML = "Visited By Toni? " + (visited ? checkIcon : xIcon);
+  cardVisited.innerHTML = "<strong>Visited By Toni?</strong> " + (visited ? checkIcon : xIcon);
 
   // You can use console.log to help you debug!
   // View the output by right clicking on your website,
@@ -143,47 +147,30 @@ function editCardContent(card, name, ImageURL, address, category, rating, visite
   console.log("new card:", name, "- html: ", card);
 }
 
-// This calls the addCards() function when the page is first loaded
+//This calls the addCards() function when the page is first loaded
 document.addEventListener("DOMContentLoaded", () => {
+  //Load food spots from localStorage if available
+  const savedFoodSpots = localStorage.getItem('foodSpotsList');
+  if (savedFoodSpots) {
+    FoodSpotsList = JSON.parse(savedFoodSpots);
+  }
+  
   showingList = [...FoodSpotsList];
   populateFilters();
   showCards();
 });
 
-
-/* 
-function handleCardAction(selectElement) {
-  const action = selectElement.value;
-  const card = selectElement.closest('.card');
-  const name = card.querySelector('h2').textContent;
-  
-  if (action === 'delete') {
-    if (confirm(`Are you sure you want to delete ${name}?`)) {
-      // Remove the food spot from the list
-      const index = FoodSpotsList.findIndex(spot => spot.name === name);
-      if (index > -1) {
-        FoodSpotsList.splice(index, 1);
-        showCards();
-      }
-    }
-  }
-  
-  // Reset the select to default option
-  selectElement.value = '';
-} */
-
+//Toggle the action menu
 function toggleActionMenu(icon) {
   const menu = icon.nextElementSibling;
   const allMenus = document.querySelectorAll('.action-menu');
   
-  // Close all other menus first
   allMenus.forEach(m => {
     if (m !== menu) {
       m.classList.remove('show');
     }
   });
   
-  // Toggle the clicked menu
   menu.classList.toggle('show');
 }
 
@@ -201,11 +188,24 @@ function handleDelete(element) {
   const name = fullText.substring(fullText.indexOf('.') + 1).trim();
   
   if (confirm(`Are you sure you want to delete ${name}?`)) {
-    // Remove the food spot from the list
-    const index = showingList.findIndex(spot => spot.name === name);
+    // Remove from both lists
+    const index = FoodSpotsList.findIndex(spot => spot.name === name);
     if (index > -1) {
+      FoodSpotsList.splice(index, 1);
       showingList.splice(index, 1);
-      showCards(); // Refresh the display
+      
+      // Update localStorage
+      localStorage.setItem('foodSpotsList', JSON.stringify(FoodSpotsList));
+      
+      // Refresh the display
+      showCards();
     }
+  }
+}
+
+function resetCatalog() {
+  if (confirm('Are you sure you want to reset the catalog? This will remove all changes and restore the original list.')) {
+    localStorage.clear();
+    location.reload();
   }
 }

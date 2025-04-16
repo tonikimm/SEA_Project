@@ -79,6 +79,25 @@ button {
   margin: 5px;
 }
 
+button[type="submit"] {
+  background-color: #FFE5B4; /* Peach yellow */
+  color: #8B7355; /* Warm brown text */
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Roboto Mono", monospace;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+  background-color: #FFD700; /* Golden yellow */
+  transform: scale(1.05);
+}
+
 .card-details {
   display: flex;
   gap: 20px;
@@ -96,11 +115,13 @@ button {
   padding: 0;
   margin: 0;
   flex: 1;
+  text-align: left;
 }
 
 .card-details li {
   margin-bottom: 10px;
-  color: #666;
+  color: #8B7355; /* Changed from #666 to the warm brown color */
+  text-align: left;
 }
 
 .menu-bar {
@@ -126,6 +147,23 @@ button {
 .menu-bar select:hover {
   border-color: #FFD700; /* Golden yellow on hover */
   background-color: #FFF9E6; /* Light mellow yellow background */
+}
+
+.reset-button {
+  background-color: #FFE5B4;
+  color: #8B7355;
+  border: none;
+  padding: 8px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Roboto Mono", monospace;
+  transition: all 0.3s ease;
+}
+
+.reset-button:hover {
+  background-color: #FFD700;
+  transform: scale(1.05);
 }
 
 .card-header {
@@ -201,4 +239,204 @@ button {
 
 .action-item i {
   font-size: 14px;
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 15px 0;
+  background-color: #FFF0D4; /* Lighter peach yellow */
+  margin-bottom: 10px;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: #8B7355; /* Warm brown text */
+  font-family: "Roboto Mono", monospace;
+  font-size: 1.2em;
+  padding: 8px 16px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+  background-color: #FFE5B4; /* Peach yellow */
+  color: #8B7355; /* Warm brown text */
+}
+
+.nav-item.active {
+  background-color: #FFE5B4; /* Peach yellow */
+  color: #8B7355; /* Warm brown text */
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contribution-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px 40px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #8B7355;
+  font-family: "Roboto Mono", monospace;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #FFE5B4;
+  border-radius: 4px;
+  font-family: "Roboto Mono", monospace;
+  color: #8B7355; /* Warm brown text */
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #FFD700;
+  box-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+}
+
+.roulette-container {
+  text-align: center;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.roulette-container h2 {
+  color: #8B7355;
+  font-family: "Roboto Mono", monospace;
+  margin-bottom: 10px;
+}
+
+.roulette-container p {
+  color: #8B7355;
+  font-family: "Roboto Mono", monospace;
+  margin-bottom: 20px;
+}
+
+#spin-button {
+  background-color: #FFE5B4;
+  color: #8B7355;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  border-radius: 5px;
+  height: 50px;
+  cursor: pointer;
+  font-family: "Roboto Mono", monospace;
+  transition: all 0.3s ease;
+}
+
+#spin-button:hover {
+  background-color: #FFD700;
+  transform: scale(1.05);
+}
+
+.roulette-result {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #FFF9E6;
+  border-radius: 5px;
+  display: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.roulette-result .card {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
+}
+
+.contribution-container h2 {
+  color: #8B7355; /* Warm brown text */
+  font-family: "Roboto Mono", monospace;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#confirmation-message {
+  text-align: center;
+  padding: 20px;
+}
+
+#confirmation-message h3 {
+  color: #8B7355;
+  font-family: "Roboto Mono", monospace;
+  margin-bottom: 15px;
+}
+
+#confirmation-message p {
+  color: #8B7355;
+  font-family: "Roboto Mono", monospace;
+  margin-bottom: 20px;
+}
+
+#confirmation-message button {
+  background-color: #FFE5B4;
+  color: #8B7355;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Roboto Mono", monospace;
+  transition: all 0.3s ease;
+}
+
+#confirmation-message button:hover {
+  background-color: #FFD700;
+  transform: scale(1.05);
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.button-group button {
+  flex: 1;
+  max-width: 200px;
+  height: 80px;
+  padding: 10px 15px;
+}
+
+.spin-again-button {
+  background-color: #FFE5B4;
+  color: #8B7355;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Roboto Mono", monospace;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+  height: 50px;
+}
+
+.spin-again-button:hover {
+  background-color: #FFD700;
+  transform: scale(1.05);
 }

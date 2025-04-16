@@ -16,6 +16,11 @@
   <body>
     <header class="main-header">
       <h1 class="title">Toni's Foodie Catalog</h1>
+      <nav class="nav-bar">
+        <a href="index.html" class="nav-item active">Catalog</a>
+        <a href="contribution.html" class="nav-item">Contribute</a>
+        <a href="roulette.html" class="nav-item">Foodie Roulette</a>
+      </nav>
       <div class="menu-bar">
         <select id="sort-select" onchange="sortAction()">
           <option value="">Sort by...</option>
@@ -33,6 +38,8 @@
         <select id="state-filter" onchange="filterAction()">
           <option value="">All States</option>
         </select>
+
+        <button onclick="resetCatalog()" class="reset-button">Reset Catalog</button>
       </div>
     </header>
 

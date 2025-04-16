@@ -236,7 +236,7 @@ var FoodSpotsList = [
         "https://lh3.googleusercontent.com/p/AF1QipO8IOiFO0PMibmuriylIQhiFi81VeSVXbgsGIF8=w203-h152-k-no"
     ),
     new FoodSpot(
-        "Sal’s Place",
+        "Sal's Place",
         {
             street: "350 N Robertson Blvd",
             city: "West Hollywood",
