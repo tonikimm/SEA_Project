@@ -1,31 +1,69 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <title>LA TV Shows | Home</title>
     <meta name="description" content="A Catalog of Shows Set in Los Angeles" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script type="text/javascript" src="data.js"></script>
     <script type="text/javascript" src="scripts.js"></script>
   </head>
 
   <body>
     <header class="main-header">
-      <h1 class="title">LA TV Shows</h1>
+      <h1 class="title">Toni's Foodie Catalog</h1>
+      <div class="menu-bar">
+        <select id="sort-select" onchange="sortFoodSpots()">
+          <option value="">Sort by...</option>
+          <option value="rating-high">Rating (High to Low)</option>
+          <option value="rating-low">Rating (Low to High)</option>
+          <option value="name-asc">Name (A to Z)</option>
+          <option value="name-desc">Name (Z to A)</option>
+        </select>
+        <select id="category-filter" onchange="filterFoodSpots()">
+          <option value="">All Categories</option>
+        </select>
+        <select id="city-filter" onchange="filterFoodSpots()">
+          <option value="">All Cities</option>
+        </select>
+        <select id="state-filter" onchange="filterFoodSpots()">
+          <option value="">All States</option>
+        </select>
+      </div>
     </header>
+
     <div id="card-container"></div>
     <div class="card" style="display: none">
       <div class="card-content">
-        <h2>TV Show Title</h2>
-        <img src="" alt="TV Show Poster" />
-        <ul>
-          <li>Bullet Point 1</li>
-          <li>Bullet Point 2</li>
-          <li>Bullet Point 3</li>
-        </ul>
+        <div class="card-header">
+          <h2>TV Show Title</h2>
+          <div class="card-actions">
+            <i class="fa-solid fa-ellipsis action-icon" onclick="toggleActionMenu(this)"></i>
+            <div class="action-menu">
+              <div class="action-item" onclick="handleDelete(this)">
+                <i class="fa-solid fa-trash"></i> Delete
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-details">
+          <img src="" alt="TV Show Poster" />
+          <ul>
+            <li id="address">Bullet Point 1</li>
+            <li id="category">Bullet Point 2</li>
+            <li id="rating">Bullet Point 3</li>
+            <li id="visited">Visited By Toni? No</li>
+          </ul>
+        </div>
       </div>
     </div>
+
+
     <div class="footer">
       <button onclick="quoteAlert();">Get A Quote!</button>
       <button onclick="removeLastCard();">Remove A Card!</button>
     </div>
+
   </body>
 </html>

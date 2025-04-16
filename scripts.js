@@ -1,88 +1,173 @@
-/**
- * Data Catalog Project Starter Code - SEA Stage 2
- *
- * This file is where you should be doing most of your work. You should
- * also make changes to the HTML and CSS files, but we want you to prioritize
- * demonstrating your understanding of data structures, and you'll do that
- * with the JavaScript code you write in this file.
- *
- * The comments in this file are only to help you learn how the starter code
- * works. The instructions for the project are in the README. That said, here
- * are the three things you should do first to learn about the starter code:
- * - 1 - Change something small in index.html or style.css, then reload your
- *    browser and make sure you can see that change.
- * - 2 - On your browser, right click anywhere on the page and select
- *    "Inspect" to open the browser developer tools. Then, go to the "console"
- *    tab in the new window that opened up. This console is where you will see
- *    JavaScript errors and logs, which is extremely helpful for debugging.
- *    (These instructions assume you're using Chrome, opening developer tools
- *    may be different on other browsers. We suggest using Chrome.)
- * - 3 - Add another string to the titles array a few lines down. Reload your
- *    browser and observe what happens. You should see a fourth "card" appear
- *    with the string you added to the array, but a broken image.
- *
- */
+const checkIcon = '<i class="fa-solid fa-square-check" style="color: #4CAF50;"></i>';
+const xIcon = '<i class="fa-solid fa-square-xmark" style="color: #f44336;"></i>';
 
-const FRESH_PRINCE_URL =
-  "https://upload.wikimedia.org/wikipedia/en/3/33/Fresh_Prince_S1_DVD.jpg";
-const CURB_POSTER_URL =
-  "https://m.media-amazon.com/images/M/MV5BZDY1ZGM4OGItMWMyNS00MDAyLWE2Y2MtZTFhMTU0MGI5ZDFlXkEyXkFqcGdeQXVyMDc5ODIzMw@@._V1_FMjpg_UX1000_.jpg";
-const EAST_LOS_HIGH_POSTER_URL =
-  "https://static.wikia.nocookie.net/hulu/images/6/64/East_Los_High.jpg";
 
-// This is an array of strings (TV show titles)
-let titles = [
-  "Fresh Prince of Bel Air",
-  "Curb Your Enthusiasm",
-  "East Los High",
-];
-// Your final submission should have much more data than this, and
-// you should use more than just an array of strings to store it all.
+// Save FoodSpotsList to localStorage whenever it changes
+function saveFoodSpotsList() {
+  localStorage.setItem('foodSpotsList', JSON.stringify(FoodSpotsList));
+}
 
-// This function adds cards the page to display the data in the array
+// Get unique cities from FoodSpotsList
+const cities = [...new Set(FoodSpotsList.map(spot => spot.address.city))].sort();
+
+// Get unique states from FoodSpotsList
+const states = [...new Set(FoodSpotsList.map(spot => spot.address.state))].sort();
+
+// Get unique categories from FoodSpotsList
+const categories = [...new Set(FoodSpotsList.map(spot => spot.category))].sort();
+
+// Populate filter dropdowns
+function populateFilters() {
+  // Populate category filter
+  const categoryFilter = document.getElementById("category-filter");
+  categories.forEach(category => {
+    const option = document.createElement("option");
+    option.value = category;
+    option.textContent = category;
+    categoryFilter.appendChild(option);
+  });
+
+  // Populate city filter
+  const cityFilter = document.getElementById("city-filter");
+  cities.forEach(city => {
+    const option = document.createElement("option");
+    option.value = city;
+    option.textContent = city;
+    cityFilter.appendChild(option);
+  });
+
+  // Populate state filter
+  const stateFilter = document.getElementById("state-filter");
+  states.forEach(state => {
+    const option = document.createElement("option");
+    option.value = state;
+    option.textContent = state;
+    stateFilter.appendChild(option);
+  });
+}
+
+function filterFoodSpots() {
+  const categoryFilter = document.getElementById("category-filter").value;
+  const cityFilter = document.getElementById("city-filter").value;
+  const stateFilter = document.getElementById("state-filter").value;
+
+  const filteredList = FoodSpotsList.filter(spot => {
+    const matchesCategory = !categoryFilter || spot.category === categoryFilter;
+    const matchesCity = !cityFilter || spot.address.city === cityFilter;
+    const matchesState = !stateFilter || spot.address.state === stateFilter;
+    return matchesCategory && matchesCity && matchesState;
+  });
+
+  showFilteredCards(filteredList);
+}
+
+function showFilteredCards(filteredList) {
+  const cardContainer = document.getElementById("card-container");
+  cardContainer.innerHTML = "";
+  const templateCard = document.querySelector(".card");
+
+  for (let i = 0; i < filteredList.length; i++) {
+    let name = filteredList[i].name;
+    let imageURL = filteredList[i].imageURL;
+    let address = filteredList[i].address;
+    let category = filteredList[i].category;
+    let rating = filteredList[i].rating;
+    let visited = filteredList[i].visited;
+
+    let formattedAddress = `${address.street}, ${address.city}, ${address.state} ${address.zip}`;
+
+    const nextCard = templateCard.cloneNode(true);
+    editCardContent(nextCard, name, imageURL, formattedAddress, category, rating, visited);
+    cardContainer.appendChild(nextCard);
+  }
+}
+
+function sortFoodSpots() {
+  const sortSelect = document.getElementById("sort-select");
+  const sortValue = sortSelect.value;
+
+  switch (sortValue) {
+    case "rating-high":
+      FoodSpotsList.sort((a, b) => {
+        if (b.rating === a.rating) {
+          return a.name.localeCompare(b.name);
+        }
+        return b.rating - a.rating;
+      });
+      break;
+    case "rating-low":
+      FoodSpotsList.sort((a, b) => {
+        if (a.rating === b.rating) {
+          return a.name.localeCompare(b.name);
+        }
+        return a.rating - b.rating;
+      });
+      break;
+    case "name-asc":
+      FoodSpotsList.sort((a, b) => a.name.localeCompare(b.name));
+      break;
+    case "name-desc":
+      FoodSpotsList.sort((a, b) => b.name.localeCompare(a.name));
+      break;
+  }
+  showCards();
+}
+
 function showCards() {
   const cardContainer = document.getElementById("card-container");
   cardContainer.innerHTML = "";
   const templateCard = document.querySelector(".card");
 
-  for (let i = 0; i < titles.length; i++) {
-    let title = titles[i];
+  for (let i = 0; i < FoodSpotsList.length; i++) {
+    let name = FoodSpotsList[i].name;
+    let imageURL = FoodSpotsList[i].imageURL;
+    let address = FoodSpotsList[i].address;
+    let category = FoodSpotsList[i].category;
+    let rating = FoodSpotsList[i].rating;
+    let visited = FoodSpotsList[i].visited;
 
-    // This part of the code doesn't scale very well! After you add your
-    // own data, you'll need to do something totally different here.
-    let imageURL = "";
-    if (i == 0) {
-      imageURL = FRESH_PRINCE_URL;
-    } else if (i == 1) {
-      imageURL = CURB_POSTER_URL;
-    } else if (i == 2) {
-      imageURL = EAST_LOS_HIGH_POSTER_URL;
-    }
+    // Format the address as a string
+    let formattedAddress = `${address.street}, ${address.city}, ${address.state} ${address.zip}`;
 
     const nextCard = templateCard.cloneNode(true); // Copy the template card
-    editCardContent(nextCard, title, imageURL); // Edit title and image
+    editCardContent(nextCard, name, imageURL, formattedAddress, category, rating, visited); // Edit title and image
     cardContainer.appendChild(nextCard); // Add new card to the container
   }
 }
 
-function editCardContent(card, newTitle, newImageURL) {
+function editCardContent(card, name, ImageURL, address, category, rating, visited) {
   card.style.display = "block";
 
   const cardHeader = card.querySelector("h2");
-  cardHeader.textContent = newTitle;
+  cardHeader.textContent = name;
 
   const cardImage = card.querySelector("img");
-  cardImage.src = newImageURL;
-  cardImage.alt = newTitle + " Poster";
+  cardImage.src = ImageURL;
+  cardImage.alt = name + " Poster";
+
+  const cardAddress = card.querySelector("#address");
+  cardAddress.textContent = "Addresss: " + address;
+
+  const cardCategory = card.querySelector("#category");
+  cardCategory.textContent = "Category: " + category;
+
+  const cardRating = card.querySelector("#rating");
+  cardRating.textContent = "Rating: " + rating + "/5";
+
+  const cardVisited = card.querySelector("#visited");
+  cardVisited.innerHTML = "Visited By Toni? " + (visited ? checkIcon : xIcon);
 
   // You can use console.log to help you debug!
   // View the output by right clicking on your website,
   // select "Inspect", then click on the "Console" tab
-  console.log("new card:", newTitle, "- html: ", card);
+  console.log("new card:", name, "- html: ", card);
 }
 
 // This calls the addCards() function when the page is first loaded
-document.addEventListener("DOMContentLoaded", showCards);
+document.addEventListener("DOMContentLoaded", () => {
+  populateFilters();
+  showCards();
+});
 
 function quoteAlert() {
   console.log("Button Clicked!");
@@ -94,4 +179,62 @@ function quoteAlert() {
 function removeLastCard() {
   titles.pop(); // Remove last item in titles array
   showCards(); // Call showCards again to refresh
+}
+
+function handleCardAction(selectElement) {
+  const action = selectElement.value;
+  const card = selectElement.closest('.card');
+  const name = card.querySelector('h2').textContent;
+  
+  if (action === 'delete') {
+    if (confirm(`Are you sure you want to delete ${name}?`)) {
+      // Remove the food spot from the list
+      const index = FoodSpotsList.findIndex(spot => spot.name === name);
+      if (index > -1) {
+        FoodSpotsList.splice(index, 1);
+        showCards();
+      }
+    }
+  }
+  
+  // Reset the select to default option
+  selectElement.value = '';
+}
+
+function toggleActionMenu(icon) {
+  const menu = icon.nextElementSibling;
+  const allMenus = document.querySelectorAll('.action-menu');
+  
+  // Close all other menus first
+  allMenus.forEach(m => {
+    if (m !== menu) {
+      m.classList.remove('show');
+    }
+  });
+  
+  // Toggle the clicked menu
+  menu.classList.toggle('show');
+}
+
+// Close menus when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.card-actions')) {
+    const allMenus = document.querySelectorAll('.action-menu');
+    allMenus.forEach(menu => menu.classList.remove('show'));
+  }
+});
+
+function handleDelete(element) {
+  const card = element.closest('.card');
+  const name = card.querySelector('h2').textContent;
+  
+  if (confirm(`Are you sure you want to delete ${name}?`)) {
+    // Remove the food spot from the list
+    const index = FoodSpotsList.findIndex(spot => spot.name === name);
+    if (index > -1) {
+      FoodSpotsList.splice(index, 1);
+      saveFoodSpotsList(); // Save changes to localStorage
+      showCards(); // Refresh the display
+    }
+  }
 }
