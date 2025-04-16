@@ -221,10 +221,9 @@ function handleDelete(element) {
   
   if (confirm(`Are you sure you want to delete ${name}?`)) {
     // Remove the food spot from the list
-    const index = FoodSpotsList.findIndex(spot => spot.name === name);
+    const index = showingList.findIndex(spot => spot.name === name);
     if (index > -1) {
-      FoodSpotsList.splice(index, 1);
-      saveFoodSpotsList(); // Save changes to localStorage
+      showingList.splice(index, 1);
       showCards(); // Refresh the display
     }
   }
