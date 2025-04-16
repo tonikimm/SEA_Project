@@ -1,11 +1,7 @@
 const checkIcon = '<i class="fa-solid fa-square-check" style="color: #4CAF50;"></i>';
 const xIcon = '<i class="fa-solid fa-square-xmark" style="color: #f44336;"></i>';
 
-
-// Save FoodSpotsList to localStorage whenever it changes
-function saveFoodSpotsList() {
-  localStorage.setItem('foodSpotsList', JSON.stringify(FoodSpotsList));
-}
+var showingList;
 
 // Get unique cities from FoodSpotsList
 const cities = [...new Set(FoodSpotsList.map(spot => spot.address.city))].sort();
@@ -46,21 +42,22 @@ function populateFilters() {
   });
 }
 
-function filterFoodSpots() {
+function filterAction() {
   const categoryFilter = document.getElementById("category-filter").value;
   const cityFilter = document.getElementById("city-filter").value;
   const stateFilter = document.getElementById("state-filter").value;
 
-  const filteredList = FoodSpotsList.filter(spot => {
+  showingList = FoodSpotsList.filter(spot => {
     const matchesCategory = !categoryFilter || spot.category === categoryFilter;
     const matchesCity = !cityFilter || spot.address.city === cityFilter;
     const matchesState = !stateFilter || spot.address.state === stateFilter;
     return matchesCategory && matchesCity && matchesState;
   });
 
-  showFilteredCards(filteredList);
+  sortFoodSpots();
+  showCards();
 }
-
+/* 
 function showFilteredCards(filteredList) {
   const cardContainer = document.getElementById("card-container");
   cardContainer.innerHTML = "";
@@ -80,7 +77,7 @@ function showFilteredCards(filteredList) {
     editCardContent(nextCard, name, imageURL, formattedAddress, category, rating, visited);
     cardContainer.appendChild(nextCard);
   }
-}
+} */
 
 function sortFoodSpots() {
   const sortSelect = document.getElementById("sort-select");
@@ -88,7 +85,7 @@ function sortFoodSpots() {
 
   switch (sortValue) {
     case "rating-high":
-      FoodSpotsList.sort((a, b) => {
+      showingList.sort((a, b) => {
         if (b.rating === a.rating) {
           return a.name.localeCompare(b.name);
         }
@@ -96,7 +93,7 @@ function sortFoodSpots() {
       });
       break;
     case "rating-low":
-      FoodSpotsList.sort((a, b) => {
+      showingList.sort((a, b) => {
         if (a.rating === b.rating) {
           return a.name.localeCompare(b.name);
         }
@@ -104,13 +101,16 @@ function sortFoodSpots() {
       });
       break;
     case "name-asc":
-      FoodSpotsList.sort((a, b) => a.name.localeCompare(b.name));
+      showingList.sort((a, b) => a.name.localeCompare(b.name));
       break;
     case "name-desc":
-      FoodSpotsList.sort((a, b) => b.name.localeCompare(a.name));
+      showingList.sort((a, b) => b.name.localeCompare(a.name));
       break;
   }
-  showCards();
+}
+
+function sortAction(){
+  filterAction();
 }
 
 function showCards() {
@@ -118,13 +118,13 @@ function showCards() {
   cardContainer.innerHTML = "";
   const templateCard = document.querySelector(".card");
 
-  for (let i = 0; i < FoodSpotsList.length; i++) {
-    let name = FoodSpotsList[i].name;
-    let imageURL = FoodSpotsList[i].imageURL;
-    let address = FoodSpotsList[i].address;
-    let category = FoodSpotsList[i].category;
-    let rating = FoodSpotsList[i].rating;
-    let visited = FoodSpotsList[i].visited;
+  for (let i = 0; i < showingList.length; i++) {
+    let name = showingList[i].name;
+    let imageURL = showingList[i].imageURL;
+    let address = showingList[i].address;
+    let category = showingList[i].category;
+    let rating = showingList[i].rating;
+    let visited = showingList[i].visited;
 
     // Format the address as a string
     let formattedAddress = `${address.street}, ${address.city}, ${address.state} ${address.zip}`;
@@ -165,21 +165,12 @@ function editCardContent(card, name, ImageURL, address, category, rating, visite
 
 // This calls the addCards() function when the page is first loaded
 document.addEventListener("DOMContentLoaded", () => {
+  showingList = [...FoodSpotsList];
   populateFilters();
   showCards();
 });
 
-function quoteAlert() {
-  console.log("Button Clicked!");
-  alert(
-    "I guess I can kiss heaven goodbye, because it got to be a sin to look this good!"
-  );
-}
 
-function removeLastCard() {
-  titles.pop(); // Remove last item in titles array
-  showCards(); // Call showCards again to refresh
-}
 
 function handleCardAction(selectElement) {
   const action = selectElement.value;

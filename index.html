@@ -3,7 +3,7 @@
 
   <head>
     <title>Toni's Foodie Catalog</title>
-    <meta name="description" content="A Catalog of Shows Set in Los Angeles" />
+    <meta name="description" content="A Catalog of Good Food Spots Visitied or to be Visited by Toni Kim" />
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script type="text/javascript" src="data.js"></script>
@@ -14,20 +14,20 @@
     <header class="main-header">
       <h1 class="title">Toni's Foodie Catalog</h1>
       <div class="menu-bar">
-        <select id="sort-select" onchange="sortFoodSpots()">
+        <select id="sort-select" onchange="sortAction()">
           <option value="">Sort by...</option>
           <option value="rating-high">Rating (High to Low)</option>
           <option value="rating-low">Rating (Low to High)</option>
           <option value="name-asc">Name (A to Z)</option>
           <option value="name-desc">Name (Z to A)</option>
         </select>
-        <select id="category-filter" onchange="filterFoodSpots()">
+        <select id="category-filter" onchange="filterAction()">
           <option value="">All Categories</option>
         </select>
-        <select id="city-filter" onchange="filterFoodSpots()">
+        <select id="city-filter" onchange="filterAction()">
           <option value="">All Cities</option>
         </select>
-        <select id="state-filter" onchange="filterFoodSpots()">
+        <select id="state-filter" onchange="filterAction()">
           <option value="">All States</option>
         </select>
       </div>
@@ -37,7 +37,7 @@
     <div class="card" style="display: none">
       <div class="card-content">
         <div class="card-header">
-          <h2>TV Show Title</h2>
+          <h2>Food Spot Name</h2>
           <div class="card-actions">
             <i class="fa-solid fa-ellipsis action-icon" onclick="toggleActionMenu(this)"></i>
             <div class="action-menu">
@@ -48,12 +48,12 @@
           </div>
         </div>
         <div class="card-details">
-          <img src="" alt="TV Show Poster" />
+          <img src="" alt="Food Spot Image" />
           <ul>
-            <li id="address">Bullet Point 1</li>
-            <li id="category">Bullet Point 2</li>
-            <li id="rating">Bullet Point 3</li>
-            <li id="visited">Visited By Toni? No</li>
+            <li id="address">Address</li>
+            <li id="category">Category</li>
+            <li id="rating">Rating</li>
+            <li id="visited">Visited By Toni?</li>
           </ul>
         </div>
       </div>
@@ -61,8 +61,7 @@
 
 
     <div class="footer">
-      <button onclick="quoteAlert();">Get A Quote!</button>
-      <button onclick="removeLastCard();">Remove A Card!</button>
+      Made by Toni Kim
     </div>
 
   </body>
