@@ -2,20 +2,24 @@ html,
 body {
   margin: 0;
   padding: 0;
+  background-color: #FFF9E6; /* Light mellow yellow background */
+  font-family: "Roboto Mono", monospace;
 }
 
 .main-header {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: #FFE5B4; /* Peach yellow header */
   padding-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .title {
   text-align: center;
   margin: 0;
   font-size: 8em;
-  font-family: "Helvetica";
-  font-weight: normal;
-  color: white;
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #8B7355; /* Warm brown text */
 }
 
 #card-container {
@@ -27,21 +31,24 @@ body {
 
 .card {
   width: 800px;
-  border: 1px solid #ccc;
+  border: 1px solid #FFE5B4;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 10px;
+  background-color: white;
 }
 
 .card-content {
   padding: 20px;
-  font-family: "Verdana";
-  color: #777;
+  font-family: "Roboto Mono", monospace;
+  color: #8B7355; /* Warm brown text */
 }
 
 .card-content h2 {
   margin-top: 0;
   font-size: 20px;
+  color: #8B7355; /* Warm brown text */
+  font-family: "Roboto Mono", monospace;
 }
 
 .card img {
@@ -52,8 +59,10 @@ body {
 .footer {
   display: flex;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: #FFE5B4; /* Peach yellow footer */
   padding: 10px;
+  color: #8B7355; /* Warm brown text */
+  font-family: "Roboto Mono", monospace;
 }
 
 button {
@@ -99,21 +108,24 @@ button {
   justify-content: center;
   gap: 10px;
   padding: 10px;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: #FFF0D4; /* Lighter peach yellow */
 }
 
 .menu-bar select {
   padding: 8px 15px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #FFE5B4;
   border-radius: 5px;
   background-color: white;
   cursor: pointer;
   min-width: 150px;
+  color: #8B7355; /* Warm brown text */
+  font-family: "Roboto Mono", monospace;
 }
 
 .menu-bar select:hover {
-  border-color: #999;
+  border-color: #FFD700; /* Golden yellow on hover */
+  background-color: #FFF9E6; /* Light mellow yellow background */
 }
 
 .card-header {
@@ -146,13 +158,13 @@ button {
   cursor: pointer;
   padding: 8px;
   font-size: 20px;
-  color: #666;
+  color: #8B7355; /* Warm brown text */
   transition: color 0.2s;
   z-index: 1;
 }
 
 .action-icon:hover {
-  color: #333;
+  color: #FFD700; /* Golden yellow on hover */
 }
 
 .action-menu {
@@ -161,9 +173,9 @@ button {
   right: 0;
   top: 100%;
   background: white;
-  border: 1px solid #ccc;
+  border: 1px solid #FFE5B4;
   border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   z-index: 1000;
   min-width: 120px;
   margin-top: 5px;
@@ -179,12 +191,12 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #666;
+  color: #8B7355; /* Warm brown text */
   transition: background-color 0.2s;
 }
 
 .action-item:hover {
-  background-color: #f5f5f5;
+  background-color: #FFF9E6; /* Light mellow yellow background */
 }
 
 .action-item i {

@@ -57,27 +57,7 @@ function filterAction() {
   sortFoodSpots();
   showCards();
 }
-/* 
-function showFilteredCards(filteredList) {
-  const cardContainer = document.getElementById("card-container");
-  cardContainer.innerHTML = "";
-  const templateCard = document.querySelector(".card");
 
-  for (let i = 0; i < filteredList.length; i++) {
-    let name = filteredList[i].name;
-    let imageURL = filteredList[i].imageURL;
-    let address = filteredList[i].address;
-    let category = filteredList[i].category;
-    let rating = filteredList[i].rating;
-    let visited = filteredList[i].visited;
-
-    let formattedAddress = `${address.street}, ${address.city}, ${address.state} ${address.zip}`;
-
-    const nextCard = templateCard.cloneNode(true);
-    editCardContent(nextCard, name, imageURL, formattedAddress, category, rating, visited);
-    cardContainer.appendChild(nextCard);
-  }
-} */
 
 function sortFoodSpots() {
   const sortSelect = document.getElementById("sort-select");
@@ -130,16 +110,16 @@ function showCards() {
     let formattedAddress = `${address.street}, ${address.city}, ${address.state} ${address.zip}`;
 
     const nextCard = templateCard.cloneNode(true); // Copy the template card
-    editCardContent(nextCard, name, imageURL, formattedAddress, category, rating, visited); // Edit title and image
+    editCardContent(nextCard, name, imageURL, formattedAddress, category, rating, visited, i+1); // Edit title and image
     cardContainer.appendChild(nextCard); // Add new card to the container
   }
 }
 
-function editCardContent(card, name, ImageURL, address, category, rating, visited) {
+function editCardContent(card, name, ImageURL, address, category, rating, visited, index) {
   card.style.display = "block";
 
   const cardHeader = card.querySelector("h2");
-  cardHeader.textContent = name;
+  cardHeader.textContent = index+ ". " + name;
 
   const cardImage = card.querySelector("img");
   cardImage.src = ImageURL;
@@ -171,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-
+/* 
 function handleCardAction(selectElement) {
   const action = selectElement.value;
   const card = selectElement.closest('.card');
@@ -190,7 +170,7 @@ function handleCardAction(selectElement) {
   
   // Reset the select to default option
   selectElement.value = '';
-}
+} */
 
 function toggleActionMenu(icon) {
   const menu = icon.nextElementSibling;
@@ -217,7 +197,8 @@ document.addEventListener('click', (e) => {
 
 function handleDelete(element) {
   const card = element.closest('.card');
-  const name = card.querySelector('h2').textContent;
+  const fullText = card.querySelector('h2').textContent;
+  const name = fullText.substring(fullText.indexOf('.') + 1).trim();
   
   if (confirm(`Are you sure you want to delete ${name}?`)) {
     // Remove the food spot from the list
