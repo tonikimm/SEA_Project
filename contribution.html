@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Contribute - Toni's Foodie Catalog</title>
+    <meta name="description" content="Add new food spots to Toni's Foodie Catalog" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript" src="contribution.js"></script>
+  </head>
+
+  <body>
+    <header class="main-header">
+      <h1 class="title">Toni's Foodie Catalog</h1>
+      <nav class="nav-bar">
+        <a href="index.html" class="nav-item">Catalog</a>
+        <a href="contribution.html" class="nav-item active">Contribute</a>
+        <a href="roulette.html" class="nav-item">Foodie Roulette</a>
+      </nav>
+    </header>
+
+    <div class="contribution-container">
+      <h2>Add New Food Spot</h2>
+      <div id="form-container">
+        <form id="contribution-form">
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="street">Street Address:</label>
+            <input type="text" id="street" name="street" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="state">State:</label>
+            <input type="text" id="state" name="state" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="zip">ZIP Code:</label>
+            <input type="text" id="zip" name="zip" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="rating">Rating (0-5):</label>
+            <input type="number" id="rating" name="rating" min="0" max="5" step="0.1" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="imageURL">Image URL:</label>
+            <input type="url" id="imageURL" name="imageURL" required>
+          </div>
+          
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+      
+      <div id="confirmation-message" style="display: none;">
+        <h3>Thank you for your contribution!</h3>
+        <p>Your food spot has been submitted for review.</p>
+        <div class="button-group">
+          <button onclick="resetForm()">Add Another Food Spot</button>
+          <button onclick="window.location.href='index.html'">Return to Catalog</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Made by Toni Kim
+    </div>
+  </body>
+</html> 
